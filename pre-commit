@@ -66,7 +66,7 @@ CHECKS = [
     },
     {
         'output': 'Running pep8...',
-        'command': 'pep8 -r --ignore=E501,W293 %s',
+        'command': 'pep8 -r %s',
         'match_files': ['.*\.py$'],
         'ignore_files': ['.*migrations.*'],
         'print_filename': False,
@@ -94,7 +94,7 @@ def exists(cmd, error=True):
     query = 'which %s' % cmd
     code = subprocess.call(query.split(), **params)
     if code != 0 and error:
-        print hilite('not installed %(command)s' % {'command': cmd}, 'yellow')
+        print(hilite('not installed %(command)s' % {'command': cmd}, 'yellow'))
         sys.exit(1)
 
 
@@ -112,7 +112,7 @@ def system(*args, **kwargs):
 
 def check_files(files, check):
     result = 0
-    print hilite(check['output'], 'yellow')
+    print(hilite(check['output'], 'yellow'))
 
     if check['exists'] and check['package']:
         exists(check['package'])
@@ -131,9 +131,9 @@ def check_files(files, check):
                         prefix = '\t'
                     output_lines = ['%s%s' % (prefix, line) for line in
                                     out.splitlines()]
-                    print hilite('\n'.join(output_lines), 'red')
+                    print(hilite('\n'.join(output_lines), 'red'))
                     if err:
-                        print hilite(err, 'red')
+                        print(hilite(err, 'red'))
                     result = 1
     return result
 
@@ -152,7 +152,7 @@ def main():
 
     result = 0
 
-    print hilite('Running Django Code Validator...', 'yellow')
+    print(hilite('Running Django Code Validator...', 'yellow'))
     if exists('$VIRTUAL_ENV/bin/python', error=False):
         return_code = subprocess.call('$VIRTUAL_ENV/bin/python manage.py '
                                       'validate', shell=True)
